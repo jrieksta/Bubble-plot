@@ -1,0 +1,25 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1621677529575.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3596262272",
+    "id" : "B785D765",
+    "lastKnownWriteTime" : 1621677546,
+    "last_content_update" : 1621677546734,
+    "path" : "C:/Users/lcm767/OneDrive - Københavns Universitet/Desktop/Projects/Repositories/Bubble-plot/22052021_heatmap.Rmd",
+    "project_path" : "22052021_heatmap.Rmd",
+    "properties" : {
+        "cursorPosition" : "4,0",
+        "scrollLine" : "0"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

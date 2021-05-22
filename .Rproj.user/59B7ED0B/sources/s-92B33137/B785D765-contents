@@ -1,0 +1,79 @@
+---
+title: "Heatmap example prepared by Jolanta Rieksta (22052021)"
+output: Rmd
+---
+
+## Heatmap example 
+#Prepared by Jolanta Rieksta
+#22052021
+
+#Load your data
+```{r }
+heat = read_excel("24042021_emmeans_herbivory_campaign.xlsx", sheet = "13052021_herbivory_plus_post_herbivory_sheet") 
+
+heat$p=as.numeric(heat$p)
+heat$p_sign=as.numeric(heat$p_sign)
+heat$p=round(heat$p, digits = 2) #round to the two digits after comma, looks nicer in th plot
+heat$p_sign=round(heat$p_sign, digits = 2) #round to the two digits after comma, looks nicer in th plot
+heat$response=round(heat$response, digits = 2) #round to the two digits after comma, looks nicer in th plot
+
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+str(heat)
+#Columns that needs to be in the dataset for heatmap to work:
+#1. Perc_increase = % percentage increase compared to control that one will be used for size of the bubble
+#2. p = p-value column
+#3. p_sign = p-value column with "statistically" significant p-values that will be bolded in the figure
+#4. response = Emission rate that one will use for coloring the bubbles in the plot
+
+```
+
+```{r pressure, echo=FALSE}
+#remove ambient control
+ heat <-heat%>% 
+   filter(Trtmt!=c("A")  )  
+
+```
+
+
+
+```{r }
+#make the figure:
+#size = percentage increase
+#color = emission rate
+#first add p-value to the bubble plot, label = p-value
+# then bold stat. sign. p-values label , fontface="bold"
+# scale size = the bubble size
+#breaks = how many categories and with what increases one wants to see in the legend
+
+ ggplot(heat,
+        aes(x = factor(Trtmt), 
+            y = factor(Group), 
+            color=response)) +
+   geom_point(aes(size=Perc_increase, fill=response, color=response),alpha = .8) + facet_wrap(Herb~Elevation, scales="fixed", ncol=4)+
+   geom_text(aes(label=p),color="black", size=6) + geom_text(aes(label=p_sign), fontface="bold",color="black", size=6) +
+   scale_fill_viridis()+  scale_color_viridis()+
+   scale_size(range = c(15, 40),breaks=c(0, 50, 100, 150, 250, 400))+
+   
+   theme(panel.grid.major = element_blank(), 
+         panel.grid.minor = element_blank()) +
+   theme_tufte()+  theme(text = element_text(size=20),
+                          #panel.border = element_rect(colour = "black", fill=NA, size=0.5),
+                          axis.text.x = element_text(size = 20),
+                          axis.text.y = element_text(size = 20),
+                          strip.text.x = element_text(size = 20),
+                          strip.background = element_blank(),
+                          axis.title.y=element_text(size=20) )
+
+
+#in print format like below, this is a very squished figure. It is because I want bubble size to be big enough that the numbers in it are fully covered by the bubble
+#save figure as 1400 x 900 or similar
+
+
+```
+
